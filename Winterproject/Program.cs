@@ -47,28 +47,32 @@ class Program
 
             function.WriteLineDuoColor(lchooses.Name, lchooses.color, " Has less HP and thus may Choose who goes first!");
             function.ReadLineNotice();
-            string answer = "";
-            bool invalidAnswer = false;
-            while (answer != lchooses.Name.ToLower() && answer != llooks.Name.ToLower())
+            string answer;
+            bool validAnswer = false;
+            bool retry = false;
+            while (!validAnswer)
             {
                 Console.Clear();
                 function.WriteDuoColor(lchooses.Name, lchooses.color, ", who goes first? (");
                 function.WriteTripleColor(lchooses.Name, lchooses.color, " / ", ConsoleColor.White, llooks.Name, llooks.color);
                 System.Console.WriteLine(")");
-                if (invalidAnswer)
+                if (!validAnswer && retry)
                     function.WriteLineDuoColor("That's not a current Leader name,", ConsoleColor.Red, " try again!");
                 answer = Console.ReadLine().ToLower();
-                if (answer == lchooses.Name.ToLower())
+                if (answer == lchooses.Name.ToLower() || answer == "me")
                 {
                     lchooses.starts = true;
+                    validAnswer = true;
                 }
-                else if (answer == llooks.Name.ToLower())
+                else if (answer == llooks.Name.ToLower() || answer == "not me")
                 {
                     llooks.starts = true;
+                    validAnswer = true;
                 }
                 else
                 {
-                    invalidAnswer = true;
+                    retry = true;
+                    validAnswer = false;
                 }
             }
         }
