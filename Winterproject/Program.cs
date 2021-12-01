@@ -1,126 +1,175 @@
 ﻿using System.Text.Json;
 
-Functions functions = new Functions();
-Random generator = new Random();
-
-Leader[] leaders = { new Leader(), new Leader() };
-
-string json = File.ReadAllText("names.json");
-List<string> arrayName = JsonSerializer.Deserialize<List<string>>(json);
-
-for (int i = 0; i < leaders.Length; i++)
+class Program
 {
-    //Decide HP
-    int[] arrayHp = { 15 };
-    int decideHP = generator.Next(arrayHp.Length);
-    leaders[i].hp = arrayHp[decideHP];
-    //Decide Name
-    int decideName = generator.Next(arrayName.Count);
-    leaders[i].name = arrayName[decideName];
-    arrayName.RemoveAt(decideName);
-    //Decide Deck Size
-    int decideDeckSize = generator.Next(31, 41);
-    leaders[i].deck = decideDeckSize;
-    //Decide Color
-    if (i == 0)
-        leaders[i].color = ConsoleColor.Yellow;
-    if (i == 1)
-        leaders[i].color = ConsoleColor.Blue;
-}
-functions.WriteLineTripleColor(leaders[0].name + " HP: " + leaders[0].hp, leaders[0].color, " --VS-- ", ConsoleColor.White, leaders[1].name + " HP: " + leaders[1].hp, leaders[1].color);
-functions.ReadLineNotice();
-Console.Clear();
+    static Function function = new Function();
+    static Random generator = new Random();
 
-if (leaders[0].hp != leaders[1].hp)
-{
-    if (leaders[0].hp < leaders[1].hp)
-    {
-        leaders[0].chooses = true;
-    }
-    else if (leaders[1].hp < leaders[0].hp)
-    {
-        leaders[1].chooses = true;
-    }
-    Leader lchooses = leaders.First(x => x.chooses == true);
-    Leader llooks = leaders.First(x => x.chooses == false);
+    public static Player[] players = { new Player(), new Player() };
+    public static string json = File.ReadAllText("names.json");
+    public static List<Player> arrayPlayer = JsonSerializer.Deserialize<List<Player>>(json);
 
-    functions.WriteLineDuoColor(lchooses.name, lchooses.color, " Has less HP and thus may Choose who goes first!");
-    functions.ReadLineNotice();
-    string answer = "bob";
-    while (answer != lchooses.name.ToLower() && answer != llooks.name.ToLower())
+    static void Main(string[] args)
     {
-        Console.Clear();
-        functions.WriteDuoColor(lchooses.name, lchooses.color, ", who goes first? (");
-        functions.WriteTripleColor(lchooses.name, lchooses.color, " / ", ConsoleColor.White, llooks.name, llooks.color);
-        System.Console.WriteLine(")");
-        answer = Console.ReadLine().ToLower();
-        if (answer == lchooses.name.ToLower())
+        for (int i = 0; i < players.Length; i++)
         {
-            lchooses.starts = true;
+            int persona = generator.Next(arrayPlayer.Count);
+            //Decide HP
+            players[i].HP = arrayPlayer[persona].HP;
+            //Decide Name
+            players[i].Name = arrayPlayer[persona].Name;
+            arrayPlayer.RemoveAt(persona);
+            //Decide Deck Size
+            int decideDeckSize = generator.Next(31, 41);
+            players[i].deck = decideDeckSize;
+            //Decide Color
+            if (i == 0)
+                players[i].color = ConsoleColor.Yellow;
+            if (i == 1)
+                players[i].color = ConsoleColor.Blue;
         }
-        else if (answer == llooks.name.ToLower())
+        function.WriteLineTripleColor(players[0].Name + " HP: " + players[0].HP, players[0].color, " --VS-- ", ConsoleColor.White, players[1].Name + " HP: " + players[1].HP, players[1].color);
+        function.ReadLineNotice();
+        Console.Clear();
+
+        if (players[0].HP != players[1].HP)
         {
-            llooks.starts = true;
+            if (players[0].HP < players[1].HP)
+            {
+                players[0].chooses = true;
+            }
+            else if (players[1].HP < players[0].HP)
+            {
+                players[1].chooses = true;
+            }
+            Player lchooses = players.First(x => x.chooses == true);
+            Player llooks = players.First(x => x.chooses == false);
+
+            function.WriteLineDuoColor(lchooses.Name, lchooses.color, " Has less HP and thus may Choose who goes first!");
+            function.ReadLineNotice();
+            string answer = "";
+            bool invalidAnswer = false;
+            while (answer != lchooses.Name.ToLower() && answer != llooks.Name.ToLower())
+            {
+                Console.Clear();
+                function.WriteDuoColor(lchooses.Name, lchooses.color, ", who goes first? (");
+                function.WriteTripleColor(lchooses.Name, lchooses.color, " / ", ConsoleColor.White, llooks.Name, llooks.color);
+                System.Console.WriteLine(")");
+                if (invalidAnswer)
+                    function.WriteLineDuoColor("That's not a current Leader name,", ConsoleColor.Red, " try again!");
+                answer = Console.ReadLine().ToLower();
+                if (answer == lchooses.Name.ToLower())
+                {
+                    lchooses.starts = true;
+                }
+                else if (answer == llooks.Name.ToLower())
+                {
+                    llooks.starts = true;
+                }
+                else
+                {
+                    invalidAnswer = true;
+                }
+            }
         }
         else
         {
-            functions.WriteLineColor("That's not a current Leader name,", ConsoleColor.Red);
-            functions.ReadLineNotice();
+            Console.WriteLine("Both Leaders Have " + players[0].HP + " HP & must therefore throw a dice to deside who goes first");
+            function.ReadLineNotice();
+            while (players[0].diceThrow == players[1].diceThrow)
+            {
+                for (var i = 0; i < 2; i++)
+                {
+                    players[i].diceThrow = generator.Next(6) + 1;
+                    ConsoleColor throwColor = ConsoleColor.White;
+                    if (players[1].diceThrow > players[0].diceThrow && i == 1)
+                        throwColor = ConsoleColor.Green;
+                    else if (players[1].diceThrow < players[0].diceThrow && i == 1)
+                        throwColor = ConsoleColor.Red;
+                    else if (players[1].diceThrow == players[0].diceThrow && i == 1)
+                        throwColor = ConsoleColor.DarkGray;
+                    function.WriteLineTripleColor(players[i].Name, players[i].color, " got: ", ConsoleColor.White, players[i].diceThrow.ToString(), throwColor);
+                    function.ReadLineNotice();
+                }
+            }
+            if (players[0].diceThrow > players[1].diceThrow)
+            {
+                players[0].starts = true;
+            }
+            else if (players[0].diceThrow < players[1].diceThrow)
+            {
+                players[1].starts = true;
+            }
         }
-    }
-}
-else
-{
-    Console.WriteLine("Both Leaders Have " + leaders[0].hp + " HP & must therefore throw a dice to deside who goes first");
-    functions.ReadLineNotice();
-    while (leaders[0].diceThrow == leaders[1].diceThrow)
-    {
-        for (var i = 0; i < 2; i++)
+        if (players[0].starts == true)
         {
-            leaders[i].diceThrow = generator.Next(6) + 1;
-            ConsoleColor throwColor = ConsoleColor.White;
-            if (leaders[1].diceThrow > leaders[0].diceThrow && i == 1)
-                throwColor = ConsoleColor.Green;
-            else if (leaders[1].diceThrow < leaders[0].diceThrow && i == 1)
-                throwColor = ConsoleColor.Red;
-            else if (leaders[1].diceThrow == leaders[0].diceThrow && i == 1)
-                throwColor = ConsoleColor.DarkGray;
-            functions.WriteLineTripleColor(leaders[i].name, leaders[i].color, " got: ", ConsoleColor.White, leaders[i].diceThrow.ToString(), throwColor);
-            functions.ReadLineNotice();
+            function.WriteLineDuoColor(players[0].Name, ConsoleColor.Yellow, " goes first!");
+            players[0].DrawStartingHandStart();
+            players[1].DrawStartingHandWait();
+        }
+        if (players[1].starts == true)
+        {
+            function.WriteLineDuoColor(players[1].Name, ConsoleColor.Blue, " goes first!");
+            players[1].DrawStartingHandStart();
+            players[0].DrawStartingHandWait();
+        }
+        function.ReadLineNotice();
+        Console.Clear();
+
+        Player lStart = players.First(x => x.starts == true);
+        Player lWait = players.First(x => x.starts == false);
+        bool play = true;
+        while (play)
+        {
+            Round();
+            lStart.Turn();
+            lWait.Turn();
         }
     }
-    if (leaders[0].diceThrow > leaders[1].diceThrow)
+    static int round = 0;
+    static void Round()
     {
-        leaders[0].starts = true;
+        Console.Clear();
+        round++;
+        Console.WriteLine("Round: " + round);
+        function.DelayWidget(0.01f);
     }
-    else if (leaders[0].diceThrow < leaders[1].diceThrow)
-    {
-        leaders[1].starts = true;
-    }
-}
-if (leaders[0].starts == true)
-{
-    functions.WriteLineDuoColor(leaders[0].name, ConsoleColor.Yellow, " goes first!");
-    leaders[0].DrawStartingHandStart();
-    leaders[1].DrawStartingHandWait();
-}
-if (leaders[1].starts == true)
-{
-    functions.WriteLineDuoColor(leaders[1].name, ConsoleColor.Blue, " goes first!");
-    leaders[1].DrawStartingHandStart();
-    leaders[0].DrawStartingHandWait();
-}
-functions.ReadLineNotice();
-Console.Clear();
 
-int round = 0;
-bool play = true;
-while (play)
-{
-    round++;
-    Leader lStart = leaders.First(x => x.starts == true);
-    Leader lWait = leaders.First(x => x.starts == false);
-    Console.WriteLine("Round: " + round);
-    lStart.Turn();
-    lWait.Turn();
+    public void Move()
+    {
+        Player lStart = players.First(x => x.starts == true);
+        Player lWait = players.First(x => x.starts == false);
+
+        if (players[0].plays)
+        {
+            function.WriteLineDuoColor(players[0].Name, players[0].color, " do you wish to Intend a Move? (Yes / No)");
+            string answer = Console.ReadLine().ToLower();
+            if (answer == "yes" || answer == "y")
+                function.WriteLineDuoColor(players[0].Name, players[0].color, " Ok'ed", ConsoleColor.Magenta);
+            else
+                function.WriteLineDuoColor(players[0].Name, players[0].color, " Passed", ConsoleColor.Magenta);
+            function.WriteLineDuoColor(players[1].Name, players[1].color, " do you wish to Intend a Move? (Yes / No)");
+            answer = Console.ReadLine().ToLower();
+            if (answer == "yes" || answer == "y")
+                function.WriteLineDuoColor(players[1].Name, players[1].color, " Ok'ed", ConsoleColor.Magenta);
+            else
+                function.WriteLineDuoColor(players[1].Name, players[1].color, " Passed", ConsoleColor.Magenta);
+        }
+        else if (players[1].plays)
+        {
+            function.WriteLineDuoColor(players[1].Name, players[1].color, " do you wish to Intend a Move? (Yes / No)");
+            string answer = Console.ReadLine().ToLower();
+            if (answer == "yes" || answer == "y")
+                function.WriteLineDuoColor(players[1].Name, players[1].color, " Ok'ed", ConsoleColor.Magenta);
+            else
+                function.WriteLineDuoColor(players[1].Name, players[1].color, " Passed", ConsoleColor.Magenta);
+            function.WriteLineDuoColor(players[0].Name, players[0].color, " do you wish to Intend a Move? (Yes / No)");
+            answer = Console.ReadLine().ToLower();
+            if (answer == "yes" || answer == "y")
+                function.WriteLineDuoColor(players[0].Name, players[0].color, " Ok'ed", ConsoleColor.Magenta);
+            else
+                function.WriteLineDuoColor(players[0].Name, players[0].color, " Passed", ConsoleColor.Magenta);
+        }
+    }
 }
+
