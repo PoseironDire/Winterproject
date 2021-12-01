@@ -39,7 +39,7 @@ public class Player
         plays = true;
         function.WriteLineDuoColor(Name + "'s", color, " Turn:");
         program.Move();
-        Cycle();
+        Start();
         function.ReadLineNotice();
         plays = false;
     }
@@ -53,11 +53,10 @@ public class Player
         deck -= 4;
         hand += 4;
     }
-    void Cycle()
+    void Start()
     {
         if (turn > 0)
         {
-            program.Move();
             if (leaderRANK < 5)
             {
                 leaderRANK++;

@@ -8,19 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\edvin.tsygankov\\.nuget\\packages\\": {}
+    "C:\\Users\\Edvin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\edvin.tsygankov\\Documents\\GitHub\\Winterproject\\Winterproject\\Winterproject.csproj",
+      "projectUniqueName": "C:\\Users\\Edvin\\Documents\\GitHub\\Winterproject\\Winterproject\\Winterproject.csproj",
       "projectName": "Winterproject",
-      "projectPath": "c:\\Users\\edvin.tsygankov\\Documents\\GitHub\\Winterproject\\Winterproject\\Winterproject.csproj",
-      "packagesPath": "C:\\Users\\edvin.tsygankov\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\edvin.tsygankov\\Documents\\GitHub\\Winterproject\\Winterproject\\obj\\",
+      "projectPath": "C:\\Users\\Edvin\\Documents\\GitHub\\Winterproject\\Winterproject\\Winterproject.csproj",
+      "packagesPath": "C:\\Users\\Edvin\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Edvin\\Documents\\GitHub\\Winterproject\\Winterproject\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\edvin.tsygankov\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Edvin\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"

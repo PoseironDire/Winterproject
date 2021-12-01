@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\edvin.tsygankov\\Documents\\GitHub\\Winterproject\\Winterproject\\Winterproject.csproj": {}
+    "C:\\Users\\Edvin\\Documents\\GitHub\\Winterproject\\Winterproject\\Winterproject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\edvin.tsygankov\\Documents\\GitHub\\Winterproject\\Winterproject\\Winterproject.csproj": {
+    "C:\\Users\\Edvin\\Documents\\GitHub\\Winterproject\\Winterproject\\Winterproject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\edvin.tsygankov\\Documents\\GitHub\\Winterproject\\Winterproject\\Winterproject.csproj",
+        "projectUniqueName": "C:\\Users\\Edvin\\Documents\\GitHub\\Winterproject\\Winterproject\\Winterproject.csproj",
         "projectName": "Winterproject",
-        "projectPath": "C:\\Users\\edvin.tsygankov\\Documents\\GitHub\\Winterproject\\Winterproject\\Winterproject.csproj",
-        "packagesPath": "C:\\Users\\edvin.tsygankov\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\edvin.tsygankov\\Documents\\GitHub\\Winterproject\\Winterproject\\obj\\",
+        "projectPath": "C:\\Users\\Edvin\\Documents\\GitHub\\Winterproject\\Winterproject\\Winterproject.csproj",
+        "packagesPath": "C:\\Users\\Edvin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Edvin\\Documents\\GitHub\\Winterproject\\Winterproject\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\edvin.tsygankov\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Edvin\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
