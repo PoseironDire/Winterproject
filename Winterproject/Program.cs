@@ -5,33 +5,37 @@ class Program
     static Function function = new Function();
     static Random generator = new Random();
 
+    //Players
     public static Player[] players = { new Player(), new Player() };
+    //Player Names
     public static string json = File.ReadAllText("names.json");
-    public static List<Player> arrayPlayer = JsonSerializer.Deserialize<List<Player>>(json);
+    public static List<Player> nameList = JsonSerializer.Deserialize<List<Player>>(json);
 
     static void Main(string[] args)
     {
+        //Generate Players
         for (int i = 0; i < players.Length; i++)
         {
-            int persona = generator.Next(arrayPlayer.Count);
+            int name = generator.Next(nameList.Count);
             //Decide HP
-            players[i].HP = arrayPlayer[persona].HP;
+            players[i].HP = nameList[name].HP;
             //Decide Name
-            players[i].Name = arrayPlayer[persona].Name;
-            arrayPlayer.RemoveAt(persona);
+            players[i].Name = nameList[name].Name;
+            nameList.RemoveAt(name);
             //Decide Deck Size
-            int decideDeckSize = generator.Next(31, 41);
-            players[i].deck = decideDeckSize;
+            players[i].deck = generator.Next(31, 41);
             //Decide Color
             if (i == 0)
                 players[i].color = ConsoleColor.Yellow;
             if (i == 1)
                 players[i].color = ConsoleColor.Blue;
         }
+        //Write Starting "Screen"
         function.WriteLineTripleColor(players[0].Name + " HP: " + players[0].HP, players[0].color, " --VS-- ", ConsoleColor.White, players[1].Name + " HP: " + players[1].HP, players[1].color);
         function.ReadLineNotice();
         Console.Clear();
 
+        //Decide Which Player Goes First
         if (players[0].HP != players[1].HP)
         {
             if (players[0].HP < players[1].HP)
@@ -55,7 +59,7 @@ class Program
                 Console.Clear();
                 function.WriteDuoColor(lchooses.Name, lchooses.color, ", who goes first? (");
                 function.WriteTripleColor(lchooses.Name, lchooses.color, " / ", ConsoleColor.White, llooks.Name, llooks.color);
-                System.Console.WriteLine(")");
+                Console.WriteLine(")");
                 if (!validAnswer && retry)
                     function.WriteLineDuoColor("That's not a current Leader name,", ConsoleColor.Red, " try again!");
                 answer = Console.ReadLine().ToLower();
@@ -130,6 +134,7 @@ class Program
             lWait.Turn();
         }
     }
+
     static int round = 0;
     static void Round()
     {
