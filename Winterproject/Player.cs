@@ -5,11 +5,10 @@ using System.Text.Json.Serialization;
 public class Player
 {
     Program program = new Program();
-    Card card = new Card();
     Function function = new Function();
 
     //Properties;
-    [JsonPropertyName("Persona")]
+    [JsonPropertyName("Name")]
     public string Name { get; set; }
     [JsonPropertyName("DMG")]
     public int DMG { get; set; }
@@ -66,7 +65,6 @@ public class Player
             leaderENERGY = 1;
             function.WriteLineDuoColor(Name, color, " Gained 1 Leader ENERGY");
             function.DelayWidget(0.01f);
-            card.Charge();
             function.WriteLineDuoColor(Name + "'s", color, " cards got Charged");
             function.DelayWidget(0.01f);
             hand++;
