@@ -6,6 +6,7 @@ public class Player
 {
     Program program = new Program();
     Function function = new Function();
+    public Player otherPlayer;
 
     //Properties;
     [JsonPropertyName("Name")]
@@ -18,7 +19,7 @@ public class Player
     public int HP { get; set; }
     public int leaderRANK = 1;
     public int leaderENERGY = 1;
-    public int turn = 0;
+    public int turn = 1;
 
     //Locations
     public int deck;
@@ -42,19 +43,22 @@ public class Player
         function.ReadLineNotice();
         plays = false;
     }
+
     public void DrawStartingHandStart()
     {
         deck -= 5;
         hand += 5;
     }
+
     public void DrawStartingHandWait()
     {
         deck -= 4;
         hand += 4;
     }
+
     void Start()
     {
-        if (turn > 0)
+        if (turn > 1)
         {
             if (leaderRANK < 5)
             {

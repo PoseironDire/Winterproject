@@ -35,6 +35,10 @@ class Program
         function.ReadLineNotice();
         Console.Clear();
 
+        // players[0].otherPlayer = players[1];
+        // players[1].otherPlayer = players[0];
+
+
         //Decide Which Player Goes First
         if (players[0].HP != players[1].HP)
         {
